@@ -7,16 +7,17 @@ Description
 We propose a partition key selection framework using graph embedding algorithms. 
 This framework mainly includes three parts:
 
-1. **Build graph model:**
-Given a set of concurrent queries, we denote operators in their physical plans as vertices V, and denote correlations between operators as edges E, which include data-passing/data-sharing/data-conflict/resource competition. The workload graph is denoted as (V, E) 
-2. **Predict performance with graph embedding:**
+1. **Build column graph:**
+We characterize behaviors of queries on the columns in the form of a graph model, where the vertices denote the features of columns and the edges capture query correlations among different columns (e.g., equi-joins). We generate column graphs with different workloads and store them as training data.
+2. **Select partitition keys:**
+We adopt a graph-based learning model to embed graph features for every column and select columns based on the embedded subgraphs.
 (**training**)
-We first choose a graph embedding model (e.g., simple GCN). And then, with workload graphs as training samples, for each graph, we iteratively use the graph model to predict for 60%  vertices, whose results are used to train the model, and use the left 40% vertices to validate the accuracy.
+We first choose a combination of graph embedding model (e.g., simple GCN) and relevance decomposition model as the key selection model. And then, with column graphs as training samples, for each graph, we iteratively use the graph model to select partition keys and utilizes the performance to tune model parameters.
 (**inference**)
-Given a workload graph (V, E), we input (V, E) into the trained model and the model gives a performance vector for each vertices in V, like start time, execution time.
+Given a column graph (V, E), we input (V, E) into the trained model and the model gives a column vector, where 1 represents the corresponding column is selected and 0 is not.
 
-3. **Graph Compaction**
-For large graph with thousands of  vertices,  we propose a greedy graph compaction algorithm. The basic idea is to greedily merge the vertices into a compound vertex.
+3. **Evaluate partition performance**
+To reduce the partition overhead, we pre-train a graph-representaion-based evaluation model to estimate the workload performance for each partition strategy.
 
 Implementation
 ===========================
@@ -49,5 +50,5 @@ Implementation
 Please cite our paper if you use this code in your own work:
 
 ```
-@article{TBD}
+[1] @article{TBD}
 ```
