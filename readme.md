@@ -38,7 +38,7 @@ Implementation
 
 ### Python Call Graph
 
-![workflow](https://github.com/DBLearner-stack/Grep/tree/master/figs/workflow.png)
+![workflow](https://github.com/DBLearner-stack/Grep/tree/master/figs/workflow.png?raw=true)
 
 
 ## Cite
