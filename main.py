@@ -34,7 +34,7 @@ args = arguments()
 def main():
     """ Partition databases with graph embedding"""
 
-    data_path = Path().joinpath('pmodel_data/serial/graph/')
+    data_path = Path().joinpath('pmodel_data/tpch/graph/')
     '''
         # data.generate
         for wid in range(workload_num[db]):
