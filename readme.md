@@ -31,14 +31,14 @@ Implementation
 1. **Create Data**
 ```python graph_generate.py --db='tpch'```
 
- %% each column schema corresponds to a graph
+ %% each workload corresponds to a graph
 
 2. **Train Model**
 ```python main.py --db='tpch'```
 
 ### Python Call Graph
 
-![workflow](./figs/workflow.png)
+![workflow](figs/workflow.png)
 
 
 ## Cite
