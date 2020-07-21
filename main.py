@@ -1,6 +1,7 @@
 # from evaluate import evaluate_model
 from train import test, train
 from model.simple_gcn import GCN
+from model.evaluate_model import eva1
 from load_data.load_training_sample import load_data
 from graph_generate import generate_graph
 
@@ -34,14 +35,15 @@ args = arguments()
 def main():
     """ Partition databases with graph embedding"""
 
-    data_path = Path().joinpath('pmodel_data/tpch/graph/')
+    data_path = Path().joinpath('pmodel_data/serial/graph/')
     '''
         # data.generate
         for wid in range(workload_num[db]):
             generate_graph(wid)
     '''
-    # evaluate.load_model
-    # evaluator = evaluate_model(pretrained=True) #todo
+
+    evaluator = eva1(pretrained=True) # evaluate.load_model
+
 
     # model.initiate
     # model: gcn + relevance decomposition
@@ -55,15 +57,15 @@ def main():
     # model training
     for wid in range(max_iteration):
         # data.load
+        use_evaluate = 0
         adj, features, labels, idx_train, idx_val, idx_test = load_data(path = data_path, dataset = "sample-plan-" + str(wid))
         if -1 in labels: # no available performance information
-            # labels = evaluator(adj, features)
-            pass
+            use_evaluate = 1
 
         # model.train
         t_total = time.time()
         for epoch in range(args.epochs):
-            train(epoch, labels, idx_train, idx_val, idx_test, model, optimizer, features, adj)
+            train(epoch, labels, idx_train, idx_val, idx_test, model, optimizer, features, adj, evaluator, use_evaluate)
         print("Optimization Finished!")
         print("Total time elapsed: {:.4f}s".format(time.time() - t_total))
 
