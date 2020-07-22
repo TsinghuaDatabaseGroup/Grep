@@ -29,9 +29,7 @@ Implementation
 
 ## Usage
 1. **Create Data**
-```python graph_generate.py --db='tpch'```
-
- %% each workload corresponds to a graph
+%% each workload corresponds to a graph
 
 2. **Train Model**
 ```python main.py --db='tpch'```
