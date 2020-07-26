@@ -39,12 +39,3 @@ Implementation
 ### Python Call Graph
 
 ![workflow](https://github.com/DBLearner-stack/Grep/tree/master/figs/workflow.png?raw=true)
-
-
-## Cite
-
-Please cite our paper if you use this code in your own work:
-
-```
-[1] @article{TBD}
-```
