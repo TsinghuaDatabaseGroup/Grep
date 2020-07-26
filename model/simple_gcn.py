@@ -19,6 +19,7 @@ import math
 import torch
 from torch.nn.parameter import Parameter
 from torch.nn.modules.module import Module
+from model import taylor_decompose
 
 class GraphConvolution(Module):
     """
@@ -56,6 +57,7 @@ class GraphConvolution(Module):
                + str(self.out_features) + ')'
 
 
+
 import torch.nn as nn
 import torch.nn.functional as F
 
@@ -65,6 +67,7 @@ class GCN(nn.Module):
         
         self.gc1 = GraphConvolution(nfeat, nhid)
         self.gc2 = GraphConvolution(nhid, nclass)
+        self.decompose = taylor_decompose.DTD()
         self.fc=nn.Linear(nclass,1)
         self.dropout = dropout
 
@@ -73,7 +76,10 @@ class GCN(nn.Module):
         x = F.dropout(x, self.dropout, training=self.training)
         x = self.gc2(x, adj)
         x=self.fc(x)
-        
-#        return F.log_softmax(x, dim=1)
-        return x
+        # module_list = taylor_decompose.model_flattening(self.gc2)
+        # act_store_model = taylor_decompose.ActivationStoringNet(module_list)
+        # module_stack, embed = act_store_model(x)
+        # relevance = self.decompose(module_stack, embed, 1000)
 
+        #        return F.log_softmax(relevance, dim=nfeat)
+        return x

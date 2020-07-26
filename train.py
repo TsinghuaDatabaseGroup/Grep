@@ -1,4 +1,4 @@
-# serial
+
 from __future__ import division
 from __future__ import print_function
 from model.simple_gcn import GCN
@@ -26,13 +26,16 @@ class arguments():
         self.node_dim = 30
 args = arguments()
 
-def train(epoch, labels, idx_train, idx_val, idx_test, model, optimizer, features, adj):
+def train(epoch, labels, idx_train, idx_val, idx_test, model, optimizer, features, adj, evaluator, use_evaluate):
     t = time.time()
     model.train()
     optimizer.zero_grad()
     output = model(features, adj)
     # print(output[idx_train])
 
+    if use_evaluate == 1:
+        # labels = evaluator(output)
+        pass
     loss_train = F.mse_loss(output[idx_train], labels[idx_train])
     
     # loss_train = nn.CrossEntropyLoss(output[idx_train], labels[idx_train])
